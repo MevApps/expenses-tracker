@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function extractPriceValue(price: string): number {
   const valueString = price.replace(/^\D+/g, ''); // remove currency symbol from start of string
   const value = parseFloat(valueString);
@@ -27,4 +29,11 @@ export function buildFilterString(
     filter += 'date >= $0 AND date < $1';
   }
   return filter;
+}
+
+export function formatDate(
+  date: Date | null | undefined,
+  format: string = 'DD.MM.YYYY',
+): string {
+  return date ? moment(date).format(format) : '';
 }

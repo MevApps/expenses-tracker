@@ -1,5 +1,5 @@
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {StatusBar, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import moment from 'moment';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {buildFilterString} from '../../utils';
@@ -12,6 +12,7 @@ import {
   getUserName,
   useQuery,
 } from '../../storage';
+import styles from './styles';
 
 type HomeScreenProps = {
   onExpenseItemClick: (id: Realm.BSON.ObjectId) => void;
@@ -37,7 +38,7 @@ function HomeScreen({onExpenseItemClick, onFiltersClick}: HomeScreenProps) {
       return accumulator;
     }, {});
 
-  const getLastFilteredExpenses = async () => {
+  const getLastFilteredExpenses = useCallback(async () => {
     const titleFilter = await getTitleFilter();
     const amountFilter = await getAmountFilter();
     const dateFilter = await getDateFilter();
@@ -50,13 +51,13 @@ function HomeScreen({onExpenseItemClick, onFiltersClick}: HomeScreenProps) {
           dateFilterStartOfDay.add(1, 'day').toDate(),
         )
       : expenses;
-  };
+  }, [expenses]);
 
   useEffect(() => {
     getLastFilteredExpenses().then(lastFilteredExpenses => {
       setFilteredExpenses(lastFilteredExpenses);
     });
-  }, [isFocused]);
+  }, [isFocused, getLastFilteredExpenses]);
 
   useFocusEffect(() => {
     StatusBar.setTranslucent(true);
@@ -82,36 +83,9 @@ function HomeScreen({onExpenseItemClick, onFiltersClick}: HomeScreenProps) {
       <FiltersButton onPress={onFiltersClick} />
       <ExpenseList
         expenses={newExpenses}
-        onExpenseItemClick={onExpenseItemClick}
+        onExpenseItemPress={onExpenseItemClick}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontFamily: 'Helvetica',
-    fontSize: 16,
-    color: '#000000',
-    fontWeight: '400',
-    elevation: 10,
-    alignSelf: 'center',
-    marginTop: 16,
-  },
-  row: {
-    alignItems: 'center',
-    alignSelf: 'baseline',
-    flexDirection: 'row',
-  },
-  rounded_button: {
-    paddingVertical: 4,
-    paddingHorizontal: 13,
-    borderRadius: 60,
-    backgroundColor: '#D9D9D9',
-  },
-});
-
 export default HomeScreen;

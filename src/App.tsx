@@ -17,16 +17,7 @@ import {
   RealmProvider,
   storeUserName,
 } from './storage';
-
-export enum RouteName {
-  Main = 'Main',
-  Home = 'Home',
-  CreateExpense = 'CreateExpense',
-  Profile = 'Profile',
-  EditExpense = 'EditExpense',
-  FilterExpense = 'FilterExpense',
-  Welcome = 'Welcome',
-}
+import {RouteName} from './constants';
 
 const Stack = createStackNavigator();
 
