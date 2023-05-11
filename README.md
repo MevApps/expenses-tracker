@@ -44,6 +44,7 @@ Please be aware of the following known issues in the app:
 4. Currency Mask: The currency mask for the amount field is not foolproof and can be manipulated.
 5. Big Numbers Sum Issue: There is an issue with summing large numbers, resulting in displaying infinity.
 6. Translucent Screen Issue: There is a jump when navigating from a screen with translucent mode to a screen without translucent mode due to a navigation configuration issue.
+7. Lack of Tests: Due to time constraints, there are no tests implemented for the app
 
 ## Video Demonstration
 https://drive.google.com/file/d/1Fu0nnuki3rq0_00PRqs0liR1PIa5ud2b/view?usp=sharing
