@@ -71,7 +71,7 @@ function HomeScreen({onExpenseItemClick, onFiltersClick}: HomeScreenProps) {
     loadUserName().then(name => setUserName(name ?? ''));
   }, []);
 
-  const newExpenses = Object.keys(expensesByDate).map(date => ({
+  const formattedExpenses = Object.keys(expensesByDate).map(date => ({
     date: date,
     data: expensesByDate[date],
   }));
@@ -82,7 +82,7 @@ function HomeScreen({onExpenseItemClick, onFiltersClick}: HomeScreenProps) {
       <TotalExpenses amount={totalAmount} />
       <FiltersButton onPress={onFiltersClick} />
       <ExpenseList
-        expenses={newExpenses}
+        expenses={formattedExpenses}
         onExpenseItemPress={onExpenseItemClick}
       />
     </View>
